@@ -1,0 +1,52 @@
+import React from 'react';
+
+class [% class_name %] extends React.Component {
+
+  constructor(props) {
+    
+    super(props);
+
+    [% IF has_some_method %][% FOREACH bind_method IN bind_method_list %]
+    this.[% bind_method %] = this.[% bind_method %].bind(this);[% END %][% END %]
+  }
+  
+
+  [% IF has_some_method %][% FOREACH bind_method IN bind_method_list %]
+  [% bind_method %](event){
+    this.props.[% bind_method %](event.target.value);
+  }[% END %][% END %]
+
+  render(){
+    return (
+      <div>
+        <span className="question">[% question_text %]</span>
+        <br/>
+        [% IF has_some_text %][% FOREACH textbox IN textbox_list %]
+        <input type="text" className="[% textbox.className %]" onChange={this.[% textbox.method %]} placeholder="[% textbox.placeholder %]" />
+        <br />[% END %][% END %]
+
+        [% IF has_some_textarea %][% FOREACH textarea IN textarea_list %]
+        <textarea className="[% textarea.className%]" onChange={this.[% textarea.method %]}>[% textarea.placeholder %]</textarea>
+        <br />[% END %][% END %]
+
+        [% IF has_some_button %][% FOREACH button IN button_list %]
+        <button className="[% button.className%]" onClick={this.[% button.method %]}>[% button.label %]</button>
+        <br />[% END %][% END %]
+      </div>
+    );
+  }
+}
+
+export default [% class_name %];
+
+/* Move the following to the parent class */
+return (
+  <div>
+    <[% class_name %]
+    [% FOREACH value IN value_list %]
+      [% value %]={this.state.[% value %]}[% END %]
+    [% FOREACH bind_method IN bind_method_list %]
+      [% bind_method %]={this.[% bind_method %]}[% END %]
+    />
+  </div>
+);
