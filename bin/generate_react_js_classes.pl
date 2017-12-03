@@ -103,7 +103,8 @@ sub generate_classes {
             has_some_method => FALSE,
             has_some_text   => FALSE,
             has_some_textarea => FALSE,
-            has_some_button => FALSE
+            has_some_button => FALSE,
+            has_some_value => FALSE
         };
 
 
@@ -145,6 +146,9 @@ sub generate_classes {
                     $inputElementLookup->{value} = $value;
 
                     push(@{$vars_lookup->{value_list}}, $value);
+
+                    $vars_lookup->{'has_some_value'} = TRUE;
+
 
                 }
 

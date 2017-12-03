@@ -39,7 +39,45 @@ class [% class_name %] extends React.Component {
 
 export default [% class_name %];
 
-/* Move the following to the parent class */
+/***************************************
+
+ The following bits of code should be 
+ moved to the parent class
+
+****************************************/
+
+/* Move this to the header of the parent class */
+import [% class_name %] from './[% class_name %].js';
+
+
+[% IF has_some_value %]
+/* Move these statements with this the this.state lookup in the constructor of the parent class */
+[% FOREACH value IN value_list %]
+'[% value %]' : '',[% END %][% END %]
+
+
+[% IF has_some_method %]
+/* Move these statements to the constructor of the parent class */
+[% FOREACH bind_method IN bind_method_list %]
+this.[% bind_method %] = this.[% bind_method %].bind(this);[% END %][% END %]
+
+
+[% IF has_some_method %]
+/* Move these methods to the main body of the parent class */
+[% FOREACH bind_method IN bind_method_list %]
+[% bind_method %](text){
+  /* Implement validation logic here */
+  if (text === undefined){
+    throw new Error("text was not defined");
+  }
+  /* Adjust state as needed here */
+  this.setState({
+    '': ,
+  });
+
+}[% END %][% END %]
+
+
 return (
   <div>
     <[% class_name %]
